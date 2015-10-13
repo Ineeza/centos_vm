@@ -1,1 +1,2 @@
-# centos_vm
+### OS
+#### CentOS 7.0
