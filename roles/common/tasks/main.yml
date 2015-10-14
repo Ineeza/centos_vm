@@ -1,0 +1,14 @@
+- include: ruby.yml tags=ruby
+- include: rbenv.yml tags=rbenv
+
+- name: Install dependencies
+  sudo: yes
+  yum: pkg={{item}} state=latest
+  with_items:
+    - git
+    - tar
+    - gcc
+    - make
+    - libffi-devel
+    - zlib-devel
+    - openssl-devel
