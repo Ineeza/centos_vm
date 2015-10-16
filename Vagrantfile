@@ -12,10 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "https://github.com/tommy-muehle/puppet-vagrant-boxes/releases/download/1.1.0/centos-7.0-x86_64.box"
   config.vm.define "cent7" do |cent|
-    cent.vm.network :private_network, ip: "33.33.33.100"
+    cent.vm.network :private_network, ip: "192.168.5.5"
     cent.vm.network :forwarded_port, host: 8888, guest: 80
+    cent.vm.network :forwarded_port, host: 3000, guest: 3000
   end
-  
+
   # Enable provision with ansible
   config.vm.provision "ansible" do |ansible|
       ansible.playbook = "site.yml"

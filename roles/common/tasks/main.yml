@@ -1,5 +1,7 @@
-- include: ruby.yml tags=ruby
-- include: rbenv.yml tags=rbenv
+# - include: ruby.yml tags=ruby
+# - include: rbenv.yml tags=rbenv
+# - include: nginx.yml tags=nginx
+- include: rails.yml tags=rails
 
 - name: Install dependencies
   sudo: yes
@@ -12,3 +14,11 @@
     - libffi-devel
     - zlib-devel
     - openssl-devel
+    - ruby-devel
+    - libxml2
+    - libxml2-devel
+    - libxslt
+    - libxslt-devel
+
+
+# gcc ruby-devel libxml2 libxml2-devel libxslt libxslt-devel
