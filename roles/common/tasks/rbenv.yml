@@ -1,1 +1,42 @@
+- name: Install rbenv
+  sudo: yes
+  git: repo=https://github.com/sstephenson/rbenv.git dest={{ rbenv_root }}
 
+- name: Install ruby-build
+  sudo: yes
+  git: repo=https://github.com/sstephenson/ruby-build.git dest={{ rbenv_root }}/plugins/ruby-build
+
+- name: create rbenv group
+  sudo: yes
+  group: name=rbenv state=present
+
+- name: add user to rbenv group
+  sudo: yes
+  user: name=centos append=yes groups=rbenv
+  register: add_group
+
+- name: create shims dir
+  sudo: yes
+  file: path={{ rbenv_root }}/shims state=directory
+
+- name: create versions dir
+  sudo: yes
+  file: path={{ rbenv_root }}/versions state=directory
+
+- name: change owner of install dir
+  sudo: yes
+  command: chgrp -R rbenv {{ rbenv_root }}
+
+- name: change mode of install dir
+  sudo: yes
+  command: chmod -R g+rwxXs {{ rbenv_root }}
+
+- name: Set rbenv env file
+  sudo: yes
+  copy: src=rbenv.sh dest=/etc/profile.d mode=0775
+
+- name: Install ruby with rbenv
+  shell: bash -lc "CONFIGURE_OPTS="--disable-install-rdoc" rbenv install {{ ruby_version }}"
+
+- name: "set ruby {{ ruby_version }} for system"
+  shell: bash -lc "rbenv global {{ ruby_version }} && rbenv rehash"
